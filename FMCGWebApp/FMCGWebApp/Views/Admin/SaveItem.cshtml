@@ -1,0 +1,94 @@
+﻿@using System.Web.UI.WebControls
+@model FMCGWebApp.Models.Item
+
+@{
+    ViewBag.Title = "SaveItem";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div id="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="fBody">
+                    <h3 style="text-align: center;margin-top: 100px">New Item Entry</h3>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "ItemValidation", id = "ItemValidation" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowCategoryId" class="control-label"></label>
+                                    <select name="CategoryId" id="CategoryId" class="form-control">
+                                        <option value="">--Select Category--</option>
+                                        @foreach (var category in ViewBag.categorys)
+                                        {
+                                            <option value="@category.Id">@category.CategoryName</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowItemName"></label>
+                                    <input type="text" id="ItemName" name="ItemName" class="ggg" placeholder="Enter Item Name" />
+                                    @*@Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "ggg", PlaceHolder = "Enter Item Name" } })*@
+                                    @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Save" class="btn btn-success btn-block" />
+                                </div>
+                            </div>
+                            <h4> @ViewBag.ShowMsg </h4>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-bottom: 175px"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+
+            $("#CategoryId").click(function () {
+                $("#ShowCategoryId").text("Category Name");
+            });
+            $("#ItemName").click(function () {
+                $("#ShowItemName").text("Item Name");
+            });
+        });
+
+        $("#ItemValidation").validate({
+            rules: {
+
+                CategoryId: "required",
+                ItemName: "required",
+
+            },
+            messages: {
+
+                CategoryId: "Please  Select Category Name!",
+                ItemName: "Please Enter Item Name",
+            }
+        });
+
+    </script>
+}

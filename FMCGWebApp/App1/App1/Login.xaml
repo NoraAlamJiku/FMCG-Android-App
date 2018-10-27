@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="#CCCEDB"
+             x:Class="App1.Login">
+    <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+        
+        <Label Text="F M C G"
+               HorizontalTextAlignment="Center"
+               BackgroundColor="Chocolate"
+               FontSize="25"
+               FontAttributes="Bold"/>
+
+        <Entry x:Name="Username" Placeholder="User name" Text="{Binding Username}" BackgroundColor="White"></Entry>
+        <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding Password}" BackgroundColor="White"></Entry>
+        <Button Text="Login" 
+                x:Name="AddButton"
+                Clicked="AddButton_OnClicked"
+                BackgroundColor="#5CB85C"/>
+    </StackLayout>
+</ContentPage>

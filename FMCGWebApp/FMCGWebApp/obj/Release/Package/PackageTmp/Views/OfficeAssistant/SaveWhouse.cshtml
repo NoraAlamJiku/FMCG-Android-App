@@ -1,0 +1,117 @@
+﻿@model FMCGWebApp.Models.W_h_info
+
+@{
+    ViewBag.Title = "SaveWhouse";
+    Layout = "~/Views/Shared/_LayoutOfficeAssistant.cshtml";
+}
+
+<
+<div id="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="fBody">
+                    <h3 style="text-align: center;margin-top: 100px">Ware House Entry</h3>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "WHValidasion", id = "WHValidasion" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowWhName"></label>
+                                    <input type="text" id="WhName" name="WhName" class="ggg" placeholder="Enter WH Name" />
+                                    @*@Html.EditorFor(model => model.WhName, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "W H Name" } })*@
+                                    @Html.ValidationMessageFor(model => model.WhName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowCapacity"></label>
+                                    <input type="text" id="Capacity" name="Capacity" class="ggg" placeholder="Enter Capacity" />
+                                    @*@Html.EditorFor(model => model.Capacity, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Capacity" } })*@
+                                    @Html.ValidationMessageFor(model => model.Capacity, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowLocation"></label>
+                                    <input type="text" id="Location" name="Location" class="ggg" placeholder="Enter Location" />
+                                    @*@Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Location" } })*@
+                                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowEmployeeId" class="control-label"></label>
+                                    <select name="EmployeeId" id="EmployeeId" class="form-control">
+                                        <option value="">--Select W H Incharge--</option>
+                                        @foreach (var employee in ViewBag.employees)
+                                        {
+                                            <option value="@employee.Id">@employee.EmployeeName</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Save" class="btn btn-success btn-block" />
+                                </div>
+                            </div>
+                            <h4> @ViewBag.ShowMsg </h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#WhName").click(function () {
+                $("#ShowWhName").text("W H Name");
+            });
+            $("#Capacity").click(function () {
+                $("#ShowCapacity").text("Capacity");
+            });
+            $("#Location").click(function () {
+                $("#ShowLocation").text("Location");
+            });
+            $("#EmployeeId").click(function () {
+                $("#ShowEmployeeId").text("W H Incharge");
+            });
+        });
+
+        $("#WHValidasion").validate({
+            rules: {
+
+                WhName: "required",
+                Capacity: "required",
+                Location: "required",
+                EmployeeId: "required",
+
+            },
+            messages: {
+
+                WhName: "Please  Enter W H Name!",
+                Capacity: "Please  Enter Capacity!",
+                Location: "Please  Enter Location Name!",
+                EmployeeId: "Please  Select W H Incharge!",
+            }
+        });
+
+    </script>
+}

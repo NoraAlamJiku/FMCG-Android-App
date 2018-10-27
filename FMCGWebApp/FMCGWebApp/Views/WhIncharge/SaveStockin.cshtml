@@ -1,0 +1,139 @@
+﻿@model FMCGWebApp.Models.StockIn
+
+@{
+    ViewBag.Title = "SaveStockin";
+    Layout = "~/Views/Shared/_LayoutWhIncharge.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="fBody">
+                    <h3 style="text-align: center;margin-top: 100px">Stock In Entry</h3>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "StockinValidasion", id = "StockinValidasion" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowCategoryId" class="control-label"></label>
+                                    <select name="CategoryId" id="CategoryId" class="form-control">
+                                        <option value="">--Select Category--</option>
+                                        @foreach (var category in ViewBag.categorys)
+                                        {
+                                            <option value="@category.Id">@category.CategoryName</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowItemId" class="control-label"></label>
+                                    <select name="ItemId" id="ItemId" class="form-control">
+                                        <option value="">--Select Item--</option>
+                                        @foreach (var item in ViewBag.item)
+                                        {
+                                            <option value="@item.Id">@item.ItemName</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowBigQuantity"></label>
+                                    <input type="text" id="BigQuantity" name="BigQuantity" class="ggg" placeholder="Enter Big cartun Quantity" />
+                                    @*@Html.EditorFor(model => model.BigQuantity, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Enter Big cartun Quantity" } })*@
+                                    @Html.ValidationMessageFor(model => model.BigQuantity, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowMediumQuantity"></label>
+                                    <input type="text" id="MediumQuantity" name="MediumQuantity" class="ggg" placeholder="Enter Medium cartun Quantity" />
+                                    @*@Html.EditorFor(model => model.MediumQuantity, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Enter Medium cartun Number" } })*@
+                                    @Html.ValidationMessageFor(model => model.MediumQuantity, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowSmallQuantity"></label>
+                                    <input type="text" id="SmallQuantity" name="SmallQuantity" class="ggg" placeholder="Enter Small cartun Quantity" />
+                                    @*@Html.EditorFor(model => model.SmallQuantity, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Enter Small cartun Number" } })*@
+                                    @Html.ValidationMessageFor(model => model.SmallQuantity, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Save" class="btn btn-success btn-block" />
+                                </div>
+                            </div>
+                            <h4> @ViewBag.ShowMsg </h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#CategoryId").click(function () {
+                $("#ShowCategoryId").text("Category Name");
+            });
+            $("#ItemId").click(function () {
+                $("#ShowItemId").text("Item Name");
+            });
+            $("#BigQuantity").click(function () {
+                $("#ShowBigQuantity").text("Big Cartun (50 × 1)");
+            });
+            $("#MediumQuantity").click(function () {
+                $("#ShowMediumQuantity").text("Medium Cartun (30 × 1)");
+            });
+            $("#SmallQuantity").click(function () {
+                $("#ShowSmallQuantity").text("Small Cartun (15 ×1)");
+            });
+        });
+
+        $("#StockinValidasion").validate({
+            rules: {
+
+                CategoryId: "required",
+                ItemId: "required",
+                BigQuantity: "required",
+                MediumQuantity: "required",
+                SmallQuantity: "required",
+
+            },
+            messages: {
+
+                CategoryId: "Please  Select Category Name!",
+                ItemId: "Please  Select Item Name!",
+                BigQuantity: "Please  Enter Big Curton Number!",
+                MediumQuantity: "Please  Enter Medium Curton Number!",
+                SmallQuantity: "Please  Enter Small Curton Number!",
+            }
+        });
+
+    </script>
+}
+
+

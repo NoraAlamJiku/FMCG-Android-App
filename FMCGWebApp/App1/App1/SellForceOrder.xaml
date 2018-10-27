@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="#CCCEDB"
+             x:Class="App1.SellForceOrder">
+
+
+    <StackLayout Padding="20" VerticalOptions="CenterAndExpand">
+        <Label Text="Sell Order"
+               HorizontalTextAlignment="Center"
+               BackgroundColor="Chocolate"
+               FontSize="25"
+               FontAttributes="Bold"/>
+
+        <Picker Title="--Select Area--" 
+                TextColor="Black"
+                x:Name="AreaListView"
+                BackgroundColor="White"
+                ItemDisplayBinding="{Binding AreaName}"
+                SelectedItem="{Binding Id}"/>
+
+        <Picker Title="--Select Shop--" 
+                TextColor="Black"
+                x:Name="ShopListView"
+                BackgroundColor="White"
+                ItemDisplayBinding="{Binding ShopName}"
+                SelectedItem="{Binding Id}"/>
+
+        <Picker Title="--Select Category--" 
+                TextColor="Black"
+                x:Name="CategoryListView"
+                BackgroundColor="White"
+                ItemDisplayBinding="{Binding CategoryName}"
+                SelectedItem="{Binding Id}"/>
+
+        <Picker Title="--Select Item--" 
+                TextColor="Black"
+                x:Name="ItemListView"
+                BackgroundColor="White"
+                ItemDisplayBinding="{Binding ItemName}"
+                SelectedItem="{Binding Id}"/>
+
+        <Entry Placeholder="Enter Quantity" x:Name="Quantity" BackgroundColor="White"/>
+
+        <Button Text="Send" 
+                        x:Name="AddButton"
+                        Clicked="AddButton_OnClicked"
+                        BackgroundColor="#5CB85C"/>
+
+
+    </StackLayout>
+
+</ContentPage>

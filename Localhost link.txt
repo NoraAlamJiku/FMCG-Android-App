@@ -1,0 +1,8 @@
+
+ http://fmcg.somee.com
+ http://localhost:32331/
+
+User Name : nora.alam07@gmail.com
+ Password : 123456
+
+

@@ -1,0 +1,135 @@
+﻿@using System.Web.UI.WebControls
+@model FMCGWebApp.Models.ShopInfo
+
+@{
+    ViewBag.Title = "SaveShopInfo";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="fBody">
+                    <h3 style="text-align: center; margin-top: 100px">New Shop Info Entry</h3>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "ShopInfoValidasion", id = "ShopInfoValidasion" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowShopName"></label>
+                                    <input type="text" id="ShopName" name="ShopName" class="ggg" placeholder="Enter Shope Number" />
+                                    @*@Html.EditorFor(model => model.ShopName, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Shop Name" } })*@
+                                    @Html.ValidationMessageFor(model => model.ShopName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowShopkeeperName"></label>
+                                    <input type="text" id="ShopkeeperName" name="ShopkeeperName" class="ggg" placeholder="Enter Shopkeeper Number" />
+                                    @*@Html.EditorFor(model => model.ShopkeeperName, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Shopkeeper Name" } })*@
+                                    @Html.ValidationMessageFor(model => model.ShopkeeperName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowAreaId" class="control-label"></label>
+                                    <select name="AreaId" id="AreaId" class="form-control">
+                                        <option value="">--Select Area--</option>
+                                        @foreach (var area in ViewBag.area)
+                                        {
+                                            <option value="@area.Id">@area.AreaName</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.AreaId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowEmployeeId" class="control-label"></label>
+                                    <select name="EmployeeId" id="EmployeeId" class="form-control">
+                                        <option value="">--Select Company Person--</option>
+                                        @foreach (var employee in ViewBag.employees)
+                                        {
+                                            <option value="@employee.Id">@employee.EmployeeName</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowPhoneNumber"></label>
+                                    <input type="text" id="PhoneNumber" name="PhoneNumber" class="ggg" placeholder="Enter Phone Number" />
+                                    @*@Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Phone Number" } })*@
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Save" class="btn btn-success btn-block" />
+                                </div>
+                            </div>
+                            <h4> @ViewBag.ShowMsg </h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#ShopName").click(function () {
+                $("#ShowShopName").text("Shop Name");
+            });
+            $("#ShopkeeperName").click(function () {
+                $("#ShowShopkeeperName").text("Shopkeeper Name");
+            });
+            $("#AreaId").click(function () {
+                $("#ShowAreaId").text("Area Name");
+            });
+            $("#EmployeeId").click(function () {
+                $("#ShowEmployeeId").text("Company Person ");
+            });
+            $("#PhoneNumber").click(function () {
+                $("#ShowPhoneNumber").text("Phone Number ");
+            });
+        });
+
+        $("#ShopInfoValidasion").validate({
+            rules: {
+
+                ShopName: "required",
+                ShopkeeperName: "required",
+                AreaId: "required",
+                EmployeeId: "required",
+                PhoneNumber: "required",
+
+            },
+            messages: {
+
+                ShopName: "Please  Enter Shop Name!",
+                ShopkeeperName: "Please  Enter Shopkeeper Name!",
+                AreaId: "Please  Select Area!",
+                EmployeeId: "Please  Select Company person!",
+                PhoneNumber: "Please  Enter Phone Number!",
+            }
+        });
+
+    </script>
+}

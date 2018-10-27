@@ -1,0 +1,92 @@
+﻿@model FMCGWebApp.Models.Area
+
+@{
+    ViewBag.Title = "SaveArea";
+    Layout = "~/Views/Shared/_LayoutOfficeAssistant.cshtml";
+}
+
+
+<div id="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="fBody">
+                    <h3 style="text-align: center;margin-top: 100px">New Area Entry</h3>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "AreaValidasion", id = "AreaValidasion" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowAreaName"></label>
+                                    <input type="text" id="AreaName" name="AreaName" class="ggg" placeholder="Enter Area Name" />
+                                    @Html.ValidationMessageFor(model => model.AreaName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowAreaCode"></label>
+                                    <input type="text" id="AreaCode" name="AreaCode" class="ggg" placeholder="Enter Area Code" />
+                                    @Html.ValidationMessageFor(model => model.AreaCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Save" class="btn btn-success btn-block" />
+                                </div>
+                            </div>
+                            <h4> @ViewBag.ShowMsg </h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-bottom: 140px"></div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#AreaName").click(function () {
+                $("#ShowAreaName").text("Area Name");
+            });
+            $("#AreaCode").click(function () {
+                $("#ShowAreaCode").text("Area Code");
+            });
+        });
+
+        $("#AreaValidasion").validate({
+            rules: {
+
+                AreaName: "required",
+                AreaCode: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 5,
+
+                }
+
+            },
+            messages: {
+
+                AreaName: "Please  Enter Area Name!",
+                AreaCode: {
+                    required: "Please Enter Area Code",
+                    minlength: "Your AreaCode must be at least 3 characters",
+                    maxlength: "Your AreaCode less than 5 characters",
+                }
+            }
+        });
+
+    </script>
+}

@@ -1,0 +1,141 @@
+﻿@model FMCGWebApp.Models.Stockout
+
+@{
+    ViewBag.Title = "Stockout";
+    Layout = "~/Views/Shared/_LayoutWhIncharge.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="fBody">
+                    <h3 style="text-align: center;margin-top: 100px">Stock In Entry</h3>
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "sellOederValidasion", id = "sellOederValidasion" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowId" class="control-label"></label>
+                                    <select name="Id" id="Id" class="form-control">
+                                        <option value="">--Select Sell Order No.--</option>
+                                        @foreach (var orderId in ViewBag.orderId)
+                                        {
+                                            <option value="@orderId.Id">@orderId.Id</option>
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowCategoryName"></label>
+                                    <input type="text" id="CategoryName" name="CategoryName" readonly="readonly" class="ggg" placeholder="Category Name" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowItemName"></label>
+                                    <input type="text" id="ItemName" name="ItemName" readonly="readonly" class="ggg" placeholder="Item Name" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowQuentity"></label>
+                                    <input type="text" id="Quentity" name="Quentity" readonly="readonly" class="ggg" placeholder="Quentity" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowShopName"></label>
+                                    <input type="text" id="ShopName" name="ShopName" readonly="readonly" class="ggg" placeholder="Shop Name" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label id="ShowAreaName"></label>
+                                    <input type="text" id="AreaName" name="AreaName" readonly="readonly" class="ggg" placeholder="Area Name" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <input type="submit" value="Confirm" class="btn btn-success btn-block" />
+                                </div>
+                            </div>
+                            <h4> @ViewBag.msg </h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#Id").change(function () {
+                //$('#SchduleTable tbody').empty();
+                var deptId = $("#Id").val();
+                var json = { departmentId: deptId, };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetSelOrderInfoById", "WhIncharge")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+                            $("#ShowCategoryName").text("Category Name");
+                            $("#CategoryName").val(value.CategoryName);
+                            $("#ShowItemName").text("Item Name");
+                            $("#ItemName").val(value.ItemName);
+                            $("#ShowQuentity").text("Quentity");
+                            $("#Quentity").val(value.Quentity);
+                            $("#ShowShopName").text("Shop Name");
+                            $("#ShopName").val(value.ShopName);
+                            $("#ShowAreaName").text("Area Name");
+                            $("#AreaName").val(value.AreaName);
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Id").click(function () {
+                $("#ShowId").text("Order Id");
+            });
+
+        });
+
+        $("#sellOederValidasion").validate({
+            rules: {
+
+                Id: "required",
+
+            },
+            messages: {
+
+                Id: "Please  Select Order Id!",
+            }
+        });
+
+    </script>
+}
